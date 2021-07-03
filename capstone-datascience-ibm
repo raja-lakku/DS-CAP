@@ -1,0 +1,123 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled3.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyO5jirTPapu++k7QtG05yvq",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/raja-lakku/DS-CAP/blob/main/capstone-datascience-ibm\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "eeGHTIwvPSht"
+      },
+      "source": [
+        "import pandas as pd\n",
+        "import requests\n",
+        "from bs4 import BeautifulSoup"
+      ],
+      "execution_count": 7,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "TW7HNBnrPWXh",
+        "outputId": "80ad2d3d-e768-446f-9162-a5ff605edc74"
+      },
+      "source": [
+        "url = \"https://en.wikipedia.org/wiki/Demographics_of_Toronto_neighbourhoods#Table\"\n",
+        "response = requests.get(url)\n",
+        "table_class = \"wikitable sortable jquery-tablesorter\"\n",
+        "print(response.status_code)"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "200\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "sdCeTyvKPbpF"
+      },
+      "source": [
+        "soup = BeautifulSoup(response.text, 'html.parser')\n",
+        "table = soup.findAll('table', {'class' : \"wikitable\"})"
+      ],
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9LijqrVdPeee",
+        "outputId": "15bfab9b-044d-4a53-ca58-1869acf261a7"
+      },
+      "source": [
+        "df = pd.read_html(str(table))\n",
+        "df = pd.DataFrame(df[0])\n",
+        "df.shape"
+      ],
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(6, 13)"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "oBJh7WCJPgtb"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
